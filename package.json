@@ -1,8 +1,19 @@
 {
+  "name": "js_register_form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giojojua/node_register.git"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "cryptr": "^6.0.3",
     "express": "^4.18.1",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.18"
+    "mysql": "^2.18.1"
   }
 }

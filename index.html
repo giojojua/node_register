@@ -12,43 +12,19 @@
 <div class="container">
     <div class="registration">
         <h1>Sign Up</h1>
-        <form action="/register-controller" method="POST">
+        <form action="" method="POST">
             <label for="user_name">
                 Username:
                 <input required type="text" name="user_name" id="user_name">
-            </label>
-            <label for="first_name">
-                First Name:
-                <input required type="text" name="first_name" id="first_name">
-            </label>
-            <label for="last_name">
-                Last Name:
-                <input required type="text" name="last_name" id="last_name">
-            </label>
-            <label for="email_address">
-                Email:
-                <input required type="email" name="email_address" id="email_address">
             </label>
             <label for="password">
                 Password:
                 <input required type="password" name="password" id="password" min="8" max="22">
             </label>
-            <label for="password_confirm">
-                Confirm Password:
-                <input required type="password" name="password_confirm" id="password_confirm">
-            </label>
-            <label for="birt_date">
-                Birthdate:
-                <input required type="date" name="birth_date" id="birt_date">
-            </label>
-            <label for="phone_number">
-                Phone Number:
-                <input required type="number" name="phone_number" id="phone_number">
-            </label>
-            <button type="submit">Confirm</button>
+            <input type="submit" value="Confirm">
+            <p>Don't Have an Account? <a href="/register.html">Sign Up</a></p>
         </form>
     </div>
 </div>
-<script src="register-controller.js"></script>
 </body>
 </html>

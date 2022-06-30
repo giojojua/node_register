@@ -4,7 +4,7 @@ const connection = mysql.createPool({
     user: 'root',
     password: 'Nosferatu0208',
     database: 'giodb',
-    port: '2222'
+    port: '3306'
 });
 connection.getConnection(function(err){
     if(!err) {
