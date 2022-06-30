@@ -5,8 +5,8 @@ const mysql = require('mysql')
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Nosferatu0208',
-    database: 'giodb',
+    password: 'nosferatu1',
+    database: 'project_db',
     port: '3306'
 })
 
@@ -14,6 +14,7 @@ const db = mysql.createConnection({
 // Connect
 db.connect((err) => {
     if (err) {
+        console.log(err)
         throw err
     } else {
         console.log('Database Connected')
@@ -37,12 +38,11 @@ app.get('/user_register', (req, res) => {
     }
 
     let sql = 'INSERT INTO users SET ?'
-    let query = db.query(sql, addUser, (err, result) => {
+    db.query(sql, addUser, (err, result) => {
         if (err) {
             throw err
         } else {
             res.send('User Registered')
-            window.location.href = "index.html"
         }
     })
 })
