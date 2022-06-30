@@ -23,6 +23,20 @@ db.connect((err) => {
 
 const app = express()
 
+// Routing
+
+app.get('/css/main.css', function(req, res){
+    res.sendFile(__dirname + '/css/main.css');
+});
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/');
+});
+
+app.get('/register.html', function(req, res){
+    res.sendFile(__dirname + '/register.html');
+});
+
 // Insert
 app.get('/user_register', (req, res) => {
     let addUser = {
