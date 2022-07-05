@@ -1,8 +1,12 @@
 const express = require('express')
 const mysql = require('mysql')
 const app = express()
+const bodyParser = require('body-parser');
 const path = require('path')
 const routes = require('./routes/routes')
+
+// app.use(express.json())
+app.use(bodyParser.urlencoded({extended: false}));
 
 // Create Connection
 const db = mysql.createConnection({
@@ -26,7 +30,7 @@ db.connect((err) => {
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/routes', express.static(path.join(__dirname, 'public')))
-app.use('/routes', routes)
+app.use('/', routes)
 
 
 // check
@@ -41,32 +45,38 @@ app.use('/routes', routes)
 //     })
 // }
 
-
 // Insert
-// app.post('/user_register', (req, res) => {
-//     let addUser = {
-//         user_name: 'admin',
-//         first_name: 'admin',
-//         last_name: 'admin',
-//         email_address: 'admin@admin.com',
-//         password: 'adminadmin',
-//         phone_number: '2222222',
-//         birth_date: '2017-02-04',
-//         created_at: '2017-02-04',
-//         updated_at: '2017-02-04',
-//     }
-//
-//     checkParameters(addUser)
-//
-//     let sql = 'INSERT INTO users SET ?'
-//     db.query(sql, addUser, (err) => {
-//         if (err) {
-//             throw err
-//         } else {
-//             res.redirect( '/')
-//         }
-//     })
-// })
+app.post('/user_register', (req, res) => {
+    let addUser = req.body
+
+    addUser.created_at = '2017-02-04'
+    delete (addUser.password_confirm)
+
+    const errorList = {}
+
+    if (addUser.password.length < 8) {
+        errorList.password = 'Password must be more then 8 characters'
+    }
+    if (addUser.user_name.length < 3) {
+        errorList.user_name = 'Username must be more then 2 characters'
+    }
+    if (addUser.phone_number.length !== 9) {
+        errorList.phone_number = 'Phone number must be 9 digit'
+    }
+
+    if (errorList['key'] == null) {
+        let sql = 'INSERT INTO users SET ?'
+        db.query(sql, addUser, (err) => {
+            if (err) {
+                throw err
+            } else {
+                res.redirect('/')
+            }
+        })
+    } else {
+        res.redirect('/register')
+    }
+})
 
 app.listen('2222', () => {
     console.log('Server started on Port http://localhost:2222')
