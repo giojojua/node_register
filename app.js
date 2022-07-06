@@ -49,22 +49,29 @@ app.use('/', routes)
 app.post('/user_register', (req, res) => {
     let addUser = req.body
 
-    addUser.created_at = '2017-02-04'
-    delete (addUser.password_confirm)
+    addUser.created_at = new Date()
 
     const errorList = {}
+
+    if (addUser.user_name.length < 3) {
+        errorList.user_name = 'Username must be more then 2 characters'
+    }
 
     if (addUser.password.length < 8) {
         errorList.password = 'Password must be more then 8 characters'
     }
-    if (addUser.user_name.length < 3) {
-        errorList.user_name = 'Username must be more then 2 characters'
+
+    if (addUser.password_confirm !== addUser.password) {
+        errorList.password_confirm = 'Passwords doesn\'t match'
     }
+
     if (addUser.phone_number.length !== 9) {
         errorList.phone_number = 'Phone number must be 9 digit'
     }
 
-    if (errorList['key'] == null) {
+    if (Object.keys(errorList).length === 0 && errorList.constructor === Object) {
+        delete (addUser.password_confirm)
+
         let sql = 'INSERT INTO users SET ?'
         db.query(sql, addUser, (err) => {
             if (err) {
@@ -74,6 +81,7 @@ app.post('/user_register', (req, res) => {
             }
         })
     } else {
+        console.log(errorList)
         res.redirect('/register')
     }
 })
