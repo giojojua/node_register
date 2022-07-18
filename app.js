@@ -68,13 +68,20 @@ app.post('/user_register', (req, res) => {
     if (addUser.phone_number.length !== 9) {
         errorList.phone_number = 'Phone number must be 9 digit'
     }
-    if (new Date().getFullYear() - new Date(`${req.body.birth_date}`).getFullYear() <= 18) {
-        if (new Date().getFullYear() - new Date(`${req.body.birth_date}`).getFullYear() === 18) {
-            if (new Date().getMonth() < new Date(`${req.body.birth_date}`).getMonth()) {
+
+    if (new Date().getFullYear() - new Date(`${req.body.birth_date}`).getFullYear() < 18) {
+        errorList.birth_date = 'You must be 18 years old or above'
+    }
+
+    if (new Date().getFullYear() - new Date(`${req.body.birth_date}`).getFullYear() === 18) {
+        if (new Date().getMonth() < new Date(`${req.body.birth_date}`).getMonth()) {
+            errorList.birth_date = 'You must be 18 years old or above'
+        }
+
+        if (new Date().getMonth() - new Date(`${req.body.birth_date}`).getMonth() === 0) {
+            if (new Date().getDay() < new Date(`${req.body.birth_date}`).getDay()) {
                 errorList.birth_date = 'You must be 18 years old or above'
             }
-        } else {
-            errorList.birth_date = 'You must be 18 years old or above'
         }
     }
 
